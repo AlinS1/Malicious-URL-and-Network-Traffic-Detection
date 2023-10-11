@@ -1,0 +1,43 @@
+Copyright Similea Alin-Andrei 314CA 2022-2023
+
+Task 1:
+We solve the first task with a while loop which will end when there will be no
+lines left in the file we read from.
+An URL is malicious if at least one of the following criteria are true:
+1. The URL ends with ".exe" or ".bin".
+We solve this with the "endings" function.
+Firstly, we verify if the ending is ".exe" and, in case it is not, we verift if
+the ending is ".bin". We do this by comparing the last 4 characters from the
+URL with the string ".exe", one character at a time, starting from the right
+(the last character from the string) towards the left. If all characters are
+the same, the URL ends with ".exe". We repeat the algorithm for ".bin".
+2. The URL contains one of the domains from the database.
+We solve this with the "database_bad" function.
+For each line read from the database, we verify if the malicious URL is found
+in the URL we are checking. If it is found, it means it's a malicious URL.
+3. The number of digits in the URL domain is greater or equal to 10% of the
+total number of letters in the URL domain.
+We solve this with the "digits_domain" function.
+The domain is going to be the first string that ends with a "/", so we separate
+it from the whole URL by using the "/" delimiter.
+Then, we number how many digits exist in the string and verify if the number is
+greater than 10% of the domain's length.
+
+Task 2:
+We use the same idea as in Task 1. We read from the file as long as we haven't
+reached the end of it. At every iteration, we make a copy of the line we read,
+to keep its initial form. A traffic is non-benign if the "flow_duration" is
+greater than or equal to 1 and if the "flow_pkts_payload.avg" is not 0.
+1. We determine the "flow_duration" by using the "flow_time" function. We
+figure that the "flow_duration" column is the 5th column, so we extract the 5th
+element the line using the "," delimiter.
+Our condition is that the duration is greater than or equal to 1 second, so we
+verify if any of the elements(days, hours, minutes or seconds) is greater than
+or equal to 1. We do this by separating the number of days, skipping the "days"
+string and separating the number of hours, minutes and seconds. For each of
+them, we transform them from char to float and then compare them to 1. If
+affirmative, the function returns 1.
+2. If the "flow_duration" is greater than 1 second, we use the function
+"flow_pkts" to determine the average payload.
+The "flow_pkts_payload.avg" is found on the last column, so we separate it
+using a while loop. Then, we transform it to float and compare it to 0.
